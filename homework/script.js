@@ -35,7 +35,7 @@ listDiv.addEventListener("click", function(e) {
     console.log("selectedList", selectedList);
 
     updateLists();
-    updateItemsForSelectedList(;
+    updateItemsForSelectedList(); // Unexpected token ; 
 });
 
 // ------------------------------------------------------
@@ -46,9 +46,26 @@ function updateLists() {
         listDiv.removeChild(listDiv.lastChild);
     }
 
+getData().forEach(function(list, i) {
+    // Create an 'a' element
+    var aElement = document.createElement("a");
+    aElement.classList.add("list-group-item");
+    aElement.classList.add("list-group-item-action");
+    aElement.classList.add("list");
+
+    aElement.setAttribute("data-index", i);
+
+    var textNode = document.createTextNode(list.name);
+    aElement.appendChild(textNode);
+
+    listDiv.appendChild(aElement);
+  });
+}
+
     listArray.forEach(function(list, index) {
         // Create an 'a' element
         var aElement = document.createElement("a");
+        var aElement = document.createElement("i");
         aElement.classList.add("list-group-item");
         aElement.classList.add("list-group-item-action");
         aElement.classList.add("list");
@@ -61,8 +78,8 @@ function updateLists() {
         aElement.appendChild(textNode);
 
         listDiv.appendChild(aElement);
-    );
-}
+    });
+
 
 function updateItemsForSelectedList() {
     while (itemDiv.hasChildNodes()) {
@@ -74,10 +91,12 @@ function updateItemsForSelectedList() {
         // Populate the list-items div (the right div) wit respective list items
         // - make a new 'a' element
         var aElement = document.createElement("a");
+        var iElement = document.createElement("i");
         // - add classes to its classList
         aElement.classList.add("list-group-item");
         aElement.classList.add("list-group-item-action");
         // - set value of 'data-index' attribute to i
+        aElement.setAttribute("data-index", "i");
         // - Create a textNode with item name
         var textNode = document.createTextNode(item);
         // - append textNode to the 'a' element
@@ -150,5 +169,8 @@ function closePopups() {
     var popupsArray = Array.from(document.querySelectorAll(".popup"));
     popupsArray.forEach(function(popup) {
         popup.style.display = "none";
-    });
-}
+    })
+};
+
+
+
